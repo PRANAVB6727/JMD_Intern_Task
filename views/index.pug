@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Bootstrap CSS -->
+  style
+    include ../node_modules/bootstrap/dist/css/bootstrap.min.css
+  
+  style
+    include ../static/style.css
+
+  script
+    include ../static/index.js
+  <title>Ocean Cargo Flow</title>
+</head>
+
+<body>
+    <section id="selectSec">
+      <ul>
+        <li><a href="/">Port Entry</a></li>
+        <li><a href="/Carrier">Carrier Entry</a></li>
+        <li><a href="/seaCargo">Sea Cargo</a></li>
+        <li><a href="/airCargo">Air Cargo</a></li>
+      </ul>
+    </section>
+    section
+    <section class="formSection">
+      <div><button id="button1" class="btn btn-primary" type="button">new entry</button></div>
+      <form action="/submitPort" method="POST" id="formContainer">
+        <input type="text" name="portName" placeholder="Enter name of port">
+        <input type="text" name="area"  placeholder="Enter area">
+        <input type="text" name="country" placeholder="Enter country">
+        <button id="sButton" class="btn btn-primary">Add</button>
+      </form>
+    </section>
+      table#PortEntry.table 
+        thead
+          tr 
+            th(scope="col") name of port
+            th(scope="col") area
+            th(scope="col") country
+            th(scope="col") edit
+            th(scope="col") delete
+        tbody
+          each port in ports
+            tr
+              td= port.nameOfThePort
+              td= port.area
+              td= port.country
+              td 
+                a#editButton(href='/editPort/' + port._id) Edit
+              td 
+                a(href='/deletePort/' + port._id) Delete       
+    </section>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    script
+      include ../node_modules/bootstrap/dist/js/bootstrap.min.js
+</body>
+
+</html>

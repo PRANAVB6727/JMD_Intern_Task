@@ -1,0 +1,42 @@
+.formSection{
+    position: absolute;
+    top: 15%;
+    left: 15%;
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+
+} 
+#formContainer{
+    display: none;
+}
+#formContainer2{
+    display: none;
+}
+.editFormContainer{
+    display: block;
+}
+.table{
+    position: absolute;
+    top: 40%;
+}
+#selectSec{
+    position: absolute;
+    top: 3%;
+    left: 3%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+}
+#selectSec ul{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    list-style: none;
+    padding-left: 0rem;
+}
+#selectSec ul li a{
+    text-decoration: none;
+}

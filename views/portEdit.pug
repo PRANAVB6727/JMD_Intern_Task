@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Bootstrap CSS -->
+  style
+    include ../node_modules/bootstrap/dist/css/bootstrap.min.css
+  
+  style
+    include ../static/style.css
+
+  script
+    include ../static/index.js
+  <title>Ocean Cargo Flow</title>
+</head>
+
+<body>
+    <section id="selectSec">
+      <ul>
+        <li><a href="/">Port Entry</a></li>
+        <li><a href="/Carrier">Carrier Entry</a></li>
+      </ul>
+    </section>
+    section
+    <section class="formSection">
+            form.editFormContainer(action='/editPort/'+ port._id, method='POST')
+                if port
+                    input(type='text' name="portName" value = port.nameOfThePort)
+                    input(type='text' name="area" value = port.area)
+                    input(type='text' name="country" value = port.country)
+                    button.btn.btn-primary Update
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    script
+      include ../node_modules/bootstrap/dist/js/bootstrap.min.js
+</body>
+
+</html>
+

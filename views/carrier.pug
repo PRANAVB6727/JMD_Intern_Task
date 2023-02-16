@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Bootstrap CSS -->
+  style
+    include ../node_modules/bootstrap/dist/css/bootstrap.min.css
+  
+  style
+    include ../static/style.css
+
+  script
+    include ../static/carrier.js
+  <title>Ocean Cargo Flow</title>
+</head>
+
+<body>
+    <section id="selectSec">
+      <ul>
+        <li><a href="/">Port Entry</a></li>
+        <li><a href="/carrier">Carrier Entry</a></li>
+        <li><a href="/seaCargo">Sea Cargo</a></li>
+        <li><a href="/airCargo">Air Cargo</a></li>
+      </ul>
+    </section>
+    <section class="formSection">
+      <div><button id="button2" class="btn btn-primary" type="button">new entry</button></div>
+      <form action="/submitCarrier" method="POST" id="formContainer2" enctype="multipart/form-data">
+        <input type="file" name="image">
+        <input type="text" name="carrierName" id="input4" placeholder="Enter name of Carrier">
+        <button id="eButton2" class="btn btn-primary">Add</button>
+      </form>
+    </section>
+    <section>
+      table#PortEntry.table 
+        thead
+          tr 
+            th(scope="col") logo
+            th(scope="col") name of carrier
+            th(scope="col") edit
+            th(scope="col") delete
+        tbody
+          each carrier in carriers
+            tr
+              td
+                if carrier.image
+                  img(src=" ../static/uploads/"+carrier.image, width='30',alt=""+carrier.nameOfTheCarrier, height='30')
+              td= carrier.nameOfTheCarrier
+              td 
+                a(href='/editCarrier/' + carrier._id) Edit
+              td 
+                a(href='/deleteCarrier/' + carrier._id) Delete
+
+    </section>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    script
+      include ../node_modules/bootstrap/dist/js/bootstrap.min.js
+</body>
+
+</html>

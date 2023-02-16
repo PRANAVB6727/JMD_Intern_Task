@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Bootstrap CSS -->
+  style
+    include ../node_modules/bootstrap/dist/css/bootstrap.min.css
+  
+  style
+    include ../static/style.css
+
+  script
+    include ../static/index.js
+  <title>Ocean Cargo Flow</title>
+</head>
+
+<body>
+    <section id="selectSec">
+      <ul>
+        <li><a href="/">Port Entry</a></li>
+        <li><a href="/Carrier">Carrier Entry</a></li>
+        <li><a href="/seaCargo">Sea Cargo</a></li>
+        <li><a href="/airCargo">Air Cargo</a></li>
+      </ul>
+    </section>
+    section
+    <section class="formSection">
+    form.editFormContainer(action='/editSeaCArgo/'+ seaCargo._id method="POST")
+        input#originSeaPort(type="text", name="originSeaPort", placeholder="Enter name of Origin port" list="seaOrigins" value=seaCargo.seaPortOrigin)
+        datalist#seaOrigins 
+          each seaOrigin in seaOrigins 
+            option(value=`${seaOrigin.nameOfThePort},${seaOrigin.area},${seaOrigin.country}`)=`${seaOrigin.nameOfThePort},${seaOrigin.area},${seaOrigin.country}`
+        input#destinationSeaPort(type="text", name="destinationSeaPort" placeholder="Enter destination port" list="seaDestinations" value=seaCargo.seaPortDestination)
+        datalist#seaDestinations 
+          each seaDestination in seaDestinations 
+            option(value=`${seaDestination.nameOfThePort},${seaDestination.area},${seaDestination.country}`)=`${seaDestination.nameOfThePort},${seaDestination.area},${seaDestination.country}`
+        select(name="seaCargoType" value=seaCargo.seaCargotype)
+          option(value="dg") Dengerous
+          option(value="nonDg") Non Dengerous
+        select(name="seaContainerType" value=seaCargo.seaContainerType)
+          option(value="20Ft") 20Ft
+          option(value="40Ft") 40Ft
+          option(value="40FtHQ") 40Ft HQ
+          input(type="text", name="seaCargoFreeTime" placeholder="Enter free time" value=seaCargo.seaFreeTime)
+          input(type="text" name="seaCargoTransitTime" placeholder="Enter transit time" value=seaCargo.seaTransitTime)
+          input#seaCargoCarrier(type="text", name="seaCargoCarrier" placeholder="Enter carrier" list="seaCarriers" value=seaCargo.seaCarrier)
+          datalist#seaCarriers 
+            each seaCarrier in seaCarriers 
+              option(value=seaCarrier.nameOfTheCarrier)=seaCarrier.nameOfTheCarrier
+          input(type="text", name="seaCargoTerms" placeholder="Terms And Conditions" value=seaCargo.seaTerms)
+          input(type="text", name="seaCargoPrice" placeholder="Enter Price in USD" value=seaCargo.seaCargoPrice)
+          input(type="date" name="seaCargoValidityDate")
+          button.btn.btn-primary(type='submit') Update
+            //- form.editFormContainer(action='/editSeaCArgo/'+ port._id, method='POST')
+            //-     if port
+            //-         input(type='text' name="portName" value = port.nameOfThePort)
+            //-         input(type='text' name="area" value = port.area)
+            //-         input(type='text' name="country" value = port.country)
+            //-         button.btn.btn-primary Update
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    script
+      include ../node_modules/bootstrap/dist/js/bootstrap.min.js
+</body>
+
+</html>
