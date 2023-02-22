@@ -1,6 +1,6 @@
 const express = require("express");
 const path = require("path");
-const fs = require("fs");
+const fs = require('fs');
 const multer = require("multer");
 const bodyParser = require('body-parser');
 require("./db/connection");
@@ -11,6 +11,7 @@ const airCargoData = require("./db/airCargoEntry");
 const app = express();
 const router = express.Router();
 const port = 3000;
+
 
 //for image upload
 let storage = multer.diskStorage({
@@ -25,6 +26,7 @@ let upload = multer({
 
 // EXPRESS SPECIFIC STUFF
 app.use("/static", express.static("static")); // For serving static files
+// app.use(express.static('./static'));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json()) //to get form data
 
@@ -34,10 +36,7 @@ app.set("views", path.join(__dirname, "views")); // Set the views directory
 
 // port section routing
 app.get("/", (req, res) => {
-  portData.find({})
-  .then((ports)=>{
-    res.render("index", {ports});
-  })
+  res.render("index");
 });
 
 app.post("/submitPort", async(req, res) => {
@@ -49,47 +48,56 @@ app.post("/submitPort", async(req, res) => {
       area:area,
       country:country
     })
+    try {
     const portAdded = await portEntry.save();
-    res.redirect("/")
+    res.status(200).json({
+      message: "port data submitted successfully",
+      data: portAdded,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
-
 // edit port
 app.get('/editPort/:id', (req, res) => {
-  portData.findById(req.params.id, (err, portData) => {
+  portData.findByIdAndUpdate(req.params.id, (err, portData) => {
     if (err) {
       console.log(err)
     } 
     else {
       res.render("portEdit",{port:portData});
-
     }
   })
 })
 app.post('/editPort/:id', (req, res) => {
   portData.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true }, (err, updatedData) => {
-    if (err) return res.status(500).send(err);
-    res.redirect('/');
+    try {
+      res.status(200).json({
+        message: "Edit Carrier form data",
+        data: updatedData,
+      });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
   });
 });
-
 //delete port
 app.get("/deletePort/:id", (req, res)=>{
   portData.findByIdAndRemove(req.params.id, (err, port) => {
-    if (err) return console.error(err);
-    res.redirect('/');
+    try {
+      res.status(200).json({
+        message: "Port form data deleated successfully",
+        data: port,
+      });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
   });
 });
-
-
 // carrier section routing
 app.get("/Carrier", (req, res) => {
-  carrierData.find({})
-  .then((carriers)=>{
-    res.render("carrier", {carriers});
-  })
+  res.render("carrier");
 });
-
-
 app.post("/submitCarrier", upload.single("image"), async(req, res) => {
   var carrierName = req.body.carrierName;
   if(req.file){
@@ -102,8 +110,15 @@ app.post("/submitCarrier", upload.single("image"), async(req, res) => {
     nameOfTheCarrier:carrierName,
     image:carrierLogo
   })
-  const carrierAdded = await carrierEntry.save();
-  res.redirect('/Carrier');
+  try {
+    const carrierAdded = await carrierEntry.save();
+    res.status(200).json({
+      message: "Carrier form data submitted successfully",
+      data: carrierAdded,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 //edit carrier
@@ -116,19 +131,30 @@ app.get('/editCarrier/:id', (req, res) => {
       res.render("carrierEdit",{carrier:carrierData});
     }
   })
-})
+});
 app.post('/editCarrier/:id', (req, res) => {
   carrierData.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true }, (err, updatedData) => {
-    if (err) return res.status(500).send(err);
-    res.redirect('/carrier');
+    try {
+      res.status(200).json({
+        message: "Edit Carrier form data",
+        data: updatedData,
+      });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
   });
 });
-
 //delete carrier
 app.get("/deleteCarrier/:id", (req, res)=>{
-  carrierData.findByIdAndRemove(req.params.id, (err) =>{
-    if (err) return console.error(err);
-    res.redirect('/carrier');
+  carrierData.findByIdAndRemove(req.params.id, (err, carrier) =>{
+    try {
+      res.status(200).json({
+        message: "Port form data deleated successfully",
+        data: port,
+      });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
   });
 });
 
@@ -156,8 +182,15 @@ app.post("/submitSeaCargo",async(req,res)=>{
     seaCargoPrice: req.body.seaCargoPrice,
     seaCargoValidityDate: req.body.seaCargoValidityDate,
   });
-  const seaCargo = await seaCargoEntry.save();
-  res.redirect("/seaCargo");
+  try {
+    const seaCargo = await seaCargoEntry.save();
+    res.status(200).json({
+      message: "Carrier form data submitted successfully",
+      data: seaCargo,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 app.get('/editSeaCargo/:id', async(req, res) => {
   const seaOrigins = await portData.find({type: "originSeaPort"});
@@ -174,14 +207,26 @@ app.get('/editSeaCargo/:id', async(req, res) => {
 });
 app.post('/editSeaCargo/:id', (req, res) => {
   carrierData.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true }, (err, updatedData) => {
-    if (err) return res.status(500).send(err);
-    res.redirect('/seaCargo');
+    try {
+      res.status(200).json({
+        message: "Edited Sea Cargo form data",
+        data: updatedData,
+      });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
   });
 });
 app.get("/deleteSeaCargo/:id", (req, res)=>{
-  seaCargoData.findByIdAndRemove(req.params.id, (err) =>{
-    if (err) return console.error(err);
-    res.redirect('/seaCargo');
+  seaCargoData.findByIdAndRemove(req.params.id, (err,seaCargo) =>{
+    try {
+      res.status(200).json({
+        message: "Port form data deleated successfully",
+        data: seaCargo,
+      });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
   });
 });
 // air cargo routing
@@ -208,8 +253,15 @@ app.post("/submitAirCargo",async(req,res)=>{
     airCargoPrice: req.body.airCargoPrice,
     airCargoValidityDate: req.body.airCargoValidityDate,
   });
-  const airCargo = await airCargoEntry.save();
-  res.redirect("/airCargo");
+  try {
+    const airCargo = await airCargoEntry.save();
+    res.status(200).json({
+      message: "Air Cargo Data submitted successfully",
+      data: airCargo,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 app.get('/editAirCargo/:id', async(req, res) => {
   const airOrigins = await portData.find({type: "originAirPort"});
@@ -226,19 +278,34 @@ app.get('/editAirCargo/:id', async(req, res) => {
 });
 app.post('/editAirCargo/:id', (req, res) => {
   airCargoData.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true }, (err, updatedData) => {
-    if (err) return res.status(500).send(err);
-    res.redirect('/airCargo');
+    try {
+      res.status(200).json({
+        message: "Edited Sea Cargo form data",
+        data: updatedData,
+      });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
   });
 });
 app.get("/deleteAirCargo/:id", (req, res)=>{
-  airCargoData.findByIdAndRemove(req.params.id, (err) =>{
-    if (err) return console.error(err);
-    res.redirect('/airCargo');
+  airCargoData.findByIdAndRemove(req.params.id, (err,airCargo) =>{
+    try {
+      res.status(200).json({
+        message: "Port form data deleated successfully",
+        data: airCargo,
+      });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
   });
 }); 
 // START THE SERVER
 app.listen(port, () => {
   console.log(`The application started successfully on port ${port}`);
 });
+
+
+
 
 
