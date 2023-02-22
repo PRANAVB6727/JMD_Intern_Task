@@ -34,27 +34,6 @@
         <button id="eButton2" class="btn btn-primary">Add</button>
       </form>
     </section>
-    <section>
-      table#PortEntry.table 
-        thead
-          tr 
-            th(scope="col") logo
-            th(scope="col") name of carrier
-            th(scope="col") edit
-            th(scope="col") delete
-        tbody
-          each carrier in carriers
-            tr
-              td
-                if carrier.image
-                  img(src=" ../static/uploads/"+carrier.image, width='30',alt=""+carrier.nameOfTheCarrier, height='30')
-              td= carrier.nameOfTheCarrier
-              td 
-                a(href='/editCarrier/' + carrier._id) Edit
-              td 
-                a(href='/deleteCarrier/' + carrier._id) Delete
-
-    </section>
     <!-- Option 1: Bootstrap Bundle with Popper -->
     script
       include ../node_modules/bootstrap/dist/js/bootstrap.min.js
