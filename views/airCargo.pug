@@ -56,40 +56,6 @@
           input(type="date" name="airCargoValidityDate")
           button.btn.btn-primary(type='submit') Add
     </section>
-    </section>
-      table#airCargoEntry.table 
-        thead
-          tr 
-            th(scope="col") origin 
-            th(scope="col") destination
-            th(scope="col") type of cargo
-            th(scope="col") Gross Weight 
-            th(scope="col") free time
-            th(scope="col") transit time
-            th(scope="col") carrier
-            th(scope="col") Terms and conditions 
-            th(scope="col") price(in USD)
-            th(scope="col") valid till 
-            th(scope="col") edit 
-            th(scope="col") delete
-        tbody
-          each airCargoEntry in airCargoEntries
-            tr
-              td= airCargoEntry.airPortOrigin
-              td= airCargoEntry.airPortDestination
-              td= airCargoEntry.airCargotype
-              td= airCargoEntry.airCargoWeight
-              td= airCargoEntry.airFreeTime
-              td= airCargoEntry.airTransitTime
-              td= airCargoEntry.airCarrier
-              td= airCargoEntry.airTerms
-              td= airCargoEntry.airCargoPrice
-              td= airCargoEntry.airCargoValidityDate
-              td 
-                a(href='/editAirCargo/' + airCargoEntry._id) Edit
-              td 
-                a(href='/deleteAirCargo/' + airCargoEntry._id) Delete       
-    </section>
     <!-- Option 1: Bootstrap Bundle with Popper -->
     script
       include ../node_modules/bootstrap/dist/js/bootstrap.min.js
