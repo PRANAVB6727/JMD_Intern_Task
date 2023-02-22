@@ -56,40 +56,6 @@
           input(type="date" name="seaCargoValidityDate")
           button.btn.btn-primary(type='submit') Add
     </section>
-    </section>
-      table#seaCargoEntry.table 
-        thead
-          tr 
-            th(scope="col") origin 
-            th(scope="col") destination
-            th(scope="col") type of cargo
-            th(scope="col") type of contianer 
-            th(scope="col") free time
-            th(scope="col") transit time
-            th(scope="col") carrier
-            th(scope="col") Terms and conditions 
-            th(scope="col") price(in USD)
-            th(scope="col") valid till 
-            th(scope="col") edit 
-            th(scope="col") delete
-        tbody
-          each seaCargoEntry in seaCargoEntries
-            tr
-              td= seaCargoEntry.seaPortOrigin
-              td= seaCargoEntry.seaPortDestination
-              td= seaCargoEntry.seaCargotype
-              td= seaCargoEntry.seaContainerType
-              td= seaCargoEntry.seaFreeTime
-              td= seaCargoEntry.seaTransitTime
-              td= seaCargoEntry.seaCarrier
-              td= seaCargoEntry.seaTerms
-              td= seaCargoEntry.seaCargoPrice
-              td= seaCargoEntry.seaCargoValidityDate
-              td 
-                a(href='/editSeaCargo/' + seaCargoEntry._id) Edit
-              td 
-                a(href='/deleteSeaCargo/' + seaCargoEntry._id) Delete       
-    </section>
     <!-- Option 1: Bootstrap Bundle with Popper -->
     script
       include ../node_modules/bootstrap/dist/js/bootstrap.min.js
